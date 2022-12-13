@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Personal_StoreFront.DATA.EF.Models.Product>
 
 @{
-    ViewData["Title"] = "Tiled Gadgets";
+    ViewData["Title"] = "Tiled Stuffs";
 }
 
 <section class="product_section gray-section layout_padding pb-4 pt-4 mb-4">
@@ -10,14 +10,14 @@
 
         <div class="heading_container heading_center">
             <h2>
-                Our <span>Gadgets</span>
+                Our <span>Stuffs</span>
             </h2>
             <p class="text-center" align="center">
 
                 @if (User.IsInRole("Admin"))
                 {
 
-                    <a asp-action="Create">Add Product</a>
+                    <a asp-action="Create">Add a Stuff</a>
                 }
 
 
