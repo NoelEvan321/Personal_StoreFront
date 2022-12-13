@@ -1,0 +1,159 @@
+﻿@model Personal_StoreFront.DATA.EF.Models.Product
+
+@{
+    ViewData["Title"] = Model.ProductName + " Details";
+}
+
+<section class="product_section gray-section pb-4 pt-4 mb-4">
+    <div class="heading_container heading_center">
+        <h2>
+            @Model.ProductName <span>Details</span>
+        </h2>
+    </div>
+</section>
+
+<div class="row mb-3">
+
+    <div class="col-md-6 offset-0 offset-md-3 text-center">
+        <img src="~/images/@Model.ProductPicture" alt="@Model.ProductName" longdesc="@Model.ProductDescription" class="img-fluid" />
+        <p class="text-info mt-3">
+            @Html.DisplayFor(model => model.ProductDescription)
+        </p>
+        <pre>
+            Product Set: @Model.ProductSeries 
+        </pre>
+    </div>
+
+    <div class="offset-0 offset-md-3 col-md-3">
+        <p>
+            <strong>
+                @Html.DisplayNameFor(model => model.ProductPrice):
+            </strong>
+            @Html.DisplayFor(model => model.ProductPrice)
+        </p>
+        <p>
+            <strong>
+                @Html.DisplayNameFor(model => model.UnitsInStock):
+            </strong>
+            @Html.DisplayFor(model => model.UnitsInStock)
+        </p>
+        <p>
+            <strong>
+                @Html.DisplayNameFor(model => model.UnitsOnOrder):
+            </strong>
+            @Html.DisplayFor(model => model.UnitsOnOrder)
+        </p>
+    </div>
+
+    <div class="offset-0 offset-md-1 col-md-5">
+        <p>
+            <strong>
+                @Html.DisplayNameFor(model => model.Category.CategoryName):
+            </strong>
+            @Html.DisplayFor(model => model.Category.CategoryName)
+        </p>
+        <p>
+            <strong>
+                @Html.DisplayNameFor(model => model.Type.ProductType1):
+            </strong>
+            @Html.DisplayFor(model => model.Type.ProductType1)
+        </p>
+    </div>
+    @if(Model.CardConditionId >0)
+    {
+        <p>
+            <strong>
+                @Html.DisplayNameFor(model => model.CardCondition):
+            </strong>
+            @Html.DisplayFor(model => model.CardCondition.Condition)
+        </p>
+        <p>
+            <strong>
+                @Html.DisplayNameFor(model => model.CardDescription):
+            </strong>
+            @Html.DisplayFor(model => model.CardDescription)
+        </p>
+    }
+
+    <div class="col-12 col-md-6 offset-md-3">
+        <a asp-action="Index" class="btn btn-primary w-100 d-inline-block">
+            Back to Products
+        </a>
+    </div>
+
+</div>
+
+@*<div>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ProductName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductSeries)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ProductSeries)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CardDescription)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CardDescription)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductDescription)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ProductDescription)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductPrice)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ProductPrice)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UnitsInStock)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UnitsInStock)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.UnitsOnOrder)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.UnitsOnOrder)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ProductPicture)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ProductPicture)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CardCondition)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CardCondition.Condition)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Category.CategoryName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Type.ProductType1)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.ProductId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>*@

@@ -1,0 +1,129 @@
+﻿@model IEnumerable<Personal_StoreFront.DATA.EF.Models.Product>
+
+@{
+    ViewData["Title"] = "Shop Stuffs";
+}
+
+<section class="product_section gray-section pb-4 pt-4 mb-4">
+    <div class="heading_container heading_center">
+        <h2>
+            Our <span>Stuffs</span>
+        </h2>
+        <p class="text-center" align="center">
+
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-action="Create">Add Product</a> <span> | </span>
+
+            }
+
+
+            <a asp-action="TiledProducts">Tile View</a>
+
+        </p>
+    </div>
+</section>
+<section class="product_section">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ProductName)
+                </th>
+                @*<th>
+                @Html.DisplayNameFor(model => model.ProductSeries)
+                </th>
+                <th>
+                @Html.DisplayNameFor(model => model.CardDescription)
+                </th>
+                <th>
+                @Html.DisplayNameFor(model => model.ProductDescription)
+                </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.ProductPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UnitsInStock)
+                </th>
+                @*<th>
+                @Html.DisplayNameFor(model => model.UnitsOnOrder)
+                </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.ProductPicture)
+                </th>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.CardCondition)
+                </th> <!--TODO: Figure out how to make this appearance conditional on card condition existing or not.-->
+                <th>
+                    @Html.DisplayNameFor(model => model.Category)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Type)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductName)
+                    </td>
+                    @*<td>
+                @Html.DisplayFor(modelItem => item.ProductSeries)
+                </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.CardDescription) //Already visible on card image.
+                </td>
+                <td>
+                @Html.DisplayFor(modelItem => item.ProductDescription)
+                </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductPrice)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnitsInStock)<!--Left visible so user knows how many copies they can order. Maybe make it only visible for cards?-->
+                    </td>
+                    @* <td>
+                @Html.DisplayFor(modelItem => item.UnitsOnOrder)
+                </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductPicture)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CardCondition.Condition)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type.ProductType1)
+                    </td>
+                    @if (User.IsInRole("Admin"))
+                    {
+
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
+                            @*<a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |*@
+
+                            @if (item.OrderProducts.Count() == 0)
+                            {
+                                //Allow the user to delete
+                                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+                            }
+                            else
+                            {
+                                <a disabled="true" class="text-danger" style="text-decoration: line-through;"
+                       title="Can't delete - referenced by other records">
+                                    Delete
+                                </a>
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</section>
