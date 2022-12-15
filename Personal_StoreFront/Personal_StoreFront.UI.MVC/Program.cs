@@ -21,6 +21,14 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
+//Below, we will register the Session sevic for use with the Shopping Cart
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(20); //The duration a session is stored in memory (which is why we don't want a super long session time.)
+    options.Cookie.HttpOnly = true; //Allows us to set Cookie options over unsecure connections
+    options.Cookie.IsEssential = true; //Cannot be declined
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
