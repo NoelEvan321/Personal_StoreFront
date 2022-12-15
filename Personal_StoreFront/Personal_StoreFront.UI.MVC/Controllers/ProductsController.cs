@@ -34,7 +34,7 @@ namespace Personal_StoreFront.UI.MVC.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> TiledProducts()
+        public async Task<IActionResult> TiledView()
         {
             var products =
                 _context.Products //SELECT * FROM Products WHERE IsDiscontinued != true 
