@@ -1,4 +1,4 @@
-namespace StoreFront.UI.MVC.Models
+namespace Personal_StoreFront.UI.MVC.Models
 {
     public class ErrorViewModel
     {

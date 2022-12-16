@@ -1,4 +1,13 @@
-﻿@*@model IEnumerable<StoreFront.DATA.EF.Models.Category>*@ 
+﻿@*@model IEnumerable<StoreFront.DATA.EF.Models.Category>*@
+@*
+    Added the two lines below to lock down certain nav items.
+    These are required to check the Authentication of a user (aka whether or not they are logged in)
+*@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signInManager
+@*@using Personal_StoreFront.UI.MVC.Models;*@
+@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
 
 <!DOCTYPE html>
 <html lang="en">
@@ -48,10 +57,10 @@
             <div class="col-lg-6 text-center text-lg-right">
                 <div class="d-inline-flex align-items-center">
                     @*<a class="text-dark px-2" href="">
-                        <i class="fab fa-facebook-f"></i>
+                    <i class="fab fa-facebook-f"></i>
                     </a>
                     <a class="text-dark px-2" href="">
-                        <i class="fab fa-twitter"></i>
+                    <i class="fab fa-twitter"></i>
                     </a>*@
                     <a class="text-dark px-2" href="https://www.linkedin.com/in/evan-noel-655245190" target="_blank">
                         <i class="fab fa-linkedin-in"></i>
@@ -60,10 +69,10 @@
                         <i class="fab fa-github"></i>
                     </a>
                     @*<a class="text-dark px-2" href="">
-                        <i class="fab fa-instagram"></i>
+                    <i class="fab fa-instagram"></i>
                     </a>
                     <a class="text-dark pl-2" href="">
-                        <i class="fab fa-youtube"></i>
+                    <i class="fab fa-youtube"></i>
                     </a>*@
                 </div>
             </div>
@@ -88,12 +97,39 @@
             </div>
             <div class="col-lg-3 col-6 text-right">
                 @*<a href="" class="btn border">
-                    <i class="fas fa-heart text-primary"></i>
-                    <span class="badge">0</span>
+                <i class="fas fa-heart text-primary"></i>
+                <span class="badge">0</span>
                 </a>*@
-                <a href="" class="btn border">
+                @{
+                    //Create a bool to determine if there are items in the cart
+                    bool cartHasProducts = false;
+
+                    //Create an int to store the number of products
+                    int productCount = 0;
+
+                    //Check if the "cart" string exists in the Session
+                    if (!string.IsNullOrEmpty(Context.Session.GetString("cart")))
+                    {
+                        //If so, there are items in the cart -- flip the bool
+                        cartHasProducts = true;
+
+                        //Create the Dictionary to hold the cart items
+                        var products = new Dictionary<int, CartitemViewModel>();
+
+                        //Deserialize the session cart & store it in the dictionary
+                        products = JsonConvert.DeserializeObject<Dictionary<int, CartitemViewModel>>(Context.Session.GetString("cart"));
+
+                        //Create a variable and assign the sum of the Qty of CartItems
+                        productCount = products.Sum(p => p.Value.Qty);
+
+                    }
+                    else{
+                        productCount = 0;
+                    }
+                }
+                <a asp-action="Index" asp-controller="ShoppingCart" class="btn border">
                     <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
+                    <span class="badge">@productCount</span>
                 </a>
             </div>
         </div>
@@ -114,14 +150,14 @@
                             <div class="dropdown-menu position-absolute bg-secondary border-0 rounded-0 w-100 m-0">
                                 <!--TODO: Add a foreach here for Html helper in the a tag-->
                                 @*@foreach(var item in Model)
-                                    {
-                                    <a class="dropdown-item">@item.CategoryName</a>
+                                {
+                                <a class="dropdown-item">@item.CategoryName</a>
                                 }*@
                                 <a href="" class="dropdown-item">Magic: the Gathering</a>
                                 <a href="" class="dropdown-item">Pok&eacute;mon</a>
                                 <a href="" class="dropdown-item">Yu-Gi-Oh!</a>
                             </div>
-                            
+
                         </div>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link" data-toggle="dropdown">Misc <i class="fa fa-angle-down float-right mt-1"></i></a>
@@ -160,8 +196,14 @@
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                                 <div class="dropdown-menu rounded-0 m-0">
-                                    <a href="cart.html" class="dropdown-item">Shopping Cart</a>
+                                    <a asp-action="Index" asp-controller="ShoppingCart" class="dropdown-item">Shopping Cart</a>
                                     <a href="checkout.html" class="dropdown-item">Checkout</a>
+                                    @if (signInManager.IsSignedIn(User))
+                                    {
+                                        //checks to make sure that someone is logged in if they are to view this HTML
+                                        //FOR THIS TO WORK, refer to the 2 lines at the top of this view.
+                                        <a class="dropdown-item" asp-action="Index" asp-controller="OrderDetails">OrderDetails</a>
+                                    }
                                 </div>
                             </div>
                             <a href="contact.html" class="nav-item nav-link">Contact</a>
@@ -179,7 +221,6 @@
         </div>
     </div>
     <!-- Navbar End -->
-
     @RenderBody()
 
     <!-- Footer Start -->
@@ -269,9 +310,6 @@
     <script src="~/js/main.js"></script>
 
     <!--Place the licensing information for this template here-->
-
-
-
     <!-- Write a script to generate Category names of cards and category names of misc (if sub categories existed)
         Instead write a script to generate category names.
         @@section genCatName{
