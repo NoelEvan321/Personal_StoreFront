@@ -11,6 +11,7 @@ namespace Personal_StoreFront.DATA.EF.Models//.Metadata
 {
     public class CardConditionMetadata
     {
+        public int CardConditionId { get; set; }
         [Required]
         [StringLength(50, ErrorMessage = "*Max of 50 characters.")]
         public string Condition { get; set; } = null!;
@@ -21,6 +22,7 @@ namespace Personal_StoreFront.DATA.EF.Models//.Metadata
 
     public class CategoryMetadata
     {
+        public int CategoryId { get; set; }
         [Required]
         [StringLength(50, ErrorMessage = "*Max of 50 characters.")]
         public string CategoryName { get; set; } = null!;
@@ -73,6 +75,7 @@ namespace Personal_StoreFront.DATA.EF.Models//.Metadata
 
     public class ProductMetadata
     {
+        public int ProductId { get; set; }
         public int? CategoryID { get; set; }
 
         [StringLength(200, ErrorMessage = "*Max of 200 characters.")]
