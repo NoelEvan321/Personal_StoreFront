@@ -4,8 +4,6 @@ using Personal_StoreFront.DATA.EF.Models; //Grants access to the context
 using Microsoft.AspNetCore.Identity; //Grants access to UserManager
 using Personal_StoreFront.UI.MVC.Models; //Grants access to the CartitemViewModel class
 using Newtonsoft.Json; //Provides easier management of the Shopping Cart
-using Personal_StoreFront.DATA.EF.Models;
-using Personal_StoreFront.UI.MVC.Models;
 
 namespace Personal_StoreFront.UI.MVC.Controllers
 {

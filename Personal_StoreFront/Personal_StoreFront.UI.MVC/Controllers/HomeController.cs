@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using StoreFront.UI.MVC.Models;
+using Personal_StoreFront.UI.MVC.Models;
 using System.Diagnostics;
 
 namespace Personal_StoreFront.UI.MVC.Controllers
