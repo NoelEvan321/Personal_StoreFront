@@ -5,7 +5,7 @@ using Personal_StoreFront.UI.MVC.Models;
 
 namespace Personal_StoreFront.UI.MVC.Controllers//Update namespace
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class AdministrationController : Controller
     {
         #region Props/Ctors

@@ -14,7 +14,6 @@ using Personal_StoreFront.UI.MVC.Utilities;
 
 namespace Personal_StoreFront.UI.MVC.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class ProductsController : Controller
     {
         private readonly Personal_StoreFrontContext _context;
@@ -150,7 +149,7 @@ namespace Personal_StoreFront.UI.MVC.Controllers
                         //Retrieve the path to wwwroot
                         string webRootPath = _webHostEnvironment.WebRootPath;
                         //variable for the full image path --> this is where we will save the image
-                        string fullImagePath = webRootPath + "/img/";
+                        string fullImagePath = webRootPath + "/images/";
 
                         //Create a MemoryStream to read the image into the server memory
                         using (var memoryStream = new MemoryStream())
@@ -195,6 +194,7 @@ namespace Personal_StoreFront.UI.MVC.Controllers
         }
 
         // GET: Products/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Products == null)
@@ -218,6 +218,7 @@ namespace Personal_StoreFront.UI.MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("ProductId,CategoryId,ProductName,CardConditionId,ProductSeries,CardDescription,ProductDescription,ProductPrice,UnitsInStock,UnitsOnOrder,ProductPicture,TypeId,Image")] Product product)
         {
             if (id != product.ProductId)
@@ -227,7 +228,49 @@ namespace Personal_StoreFront.UI.MVC.Controllers
 
             if (ModelState.IsValid)
             {
+                #region EDIT File Upload
+                //retain old image file name so we can delete if a new file was uploaded
+                string oldImageName = product.ProductPicture;
 
+                //Check if the user uploaded a file
+                if (product.Image != null)
+                {
+                    //get the file's extension
+                    string ext = Path.GetExtension(product.Image.FileName);
+
+                    //list valid extensions
+                    string[] validExts = { ".jpeg", ".jpg", ".png", ".gif" };
+
+                    //check the file's extension against the list of valid extensions
+                    if (validExts.Contains(ext.ToLower()) && product.Image.Length < 4_194_303)
+                    {
+                        //generate a unique file name
+                        product.ProductPicture = Guid.NewGuid() + ext;
+                        //build our file path to save the image
+                        string webRootPath = _webHostEnvironment.WebRootPath;
+                        string fullPath = webRootPath + "/images/";
+
+                        //Delete the old image
+                        if (oldImageName != "noimage.png")
+                        {
+                            ImageUtility.Delete(fullPath, oldImageName);
+                        }
+
+                        //Save the new image to webroot
+                        using (var memoryStream = new MemoryStream())
+                        {
+                            await product.Image.CopyToAsync(memoryStream);
+                            using (var img = Image.FromStream(memoryStream))
+                            {
+                                int maxImageSize = 500;
+                                int maxThumbSize = 100;
+                                ImageUtility.ResizeImage(fullPath, product.ProductPicture, img, maxImageSize, maxThumbSize);
+                            }
+                        }
+
+                    }
+                }
+                #endregion
 
                 try
                 {
@@ -254,6 +297,7 @@ namespace Personal_StoreFront.UI.MVC.Controllers
         }
 
         // GET: Products/Delete/5
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Products == null)
@@ -277,6 +321,7 @@ namespace Personal_StoreFront.UI.MVC.Controllers
         // POST: Products/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Products == null)
