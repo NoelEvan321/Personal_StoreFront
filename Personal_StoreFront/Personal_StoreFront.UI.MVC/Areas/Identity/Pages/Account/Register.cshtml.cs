@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Personal_StoreFront.DATA.EF.Models;
 
 namespace Personal_StoreFront.UI.MVC.Areas.Identity.Pages.Account
 {
@@ -119,6 +120,9 @@ namespace Personal_StoreFront.UI.MVC.Areas.Identity.Pages.Account
             [StringLength(5, ErrorMessage = "*Must be 5 characters")]
             public string? Zip { get; set; }
 
+            [StringLength(50, ErrorMessage = "*Cannot exceed 50 characters")]
+            public string? Country { get; set; }
+
             [StringLength(24, ErrorMessage = "*Cannot exceed 24 characters")]
             public string? Phone { get; set; }
         }
@@ -147,6 +151,36 @@ namespace Personal_StoreFront.UI.MVC.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
+
+                    #region Custom User Registration - Creating a New UserDetails Record in the Database
+
+                    //This Personal_StoreFrontContext object is what we use to save the new UserDetail record 
+                    //to the database. This is the same type of object that we use in our scaffolded 
+                    //Controllers. Remember to add 'using Personal_StoreFront.DATA.EF.Models;' to the top of this page.
+                    Personal_StoreFrontContext _context = new Personal_StoreFrontContext();
+
+                    //Instantiate a UserDetail object that will be saved to the Database
+                    UsersDetail userDetail = new UsersDetail()
+                    {
+                        UserId = userId,
+                        FirstName = Input.FirstName,
+                        LastName = Input.LastName,
+                        Address = Input.Address,
+                        City = Input.City,
+                        State = Input.State,
+                        Zip = Input.Zip,
+                        CustomerCountry = Input.Country,
+                        Phone = Input.Phone
+                    };
+
+                    //Add the UserDetail object above to the Entity Set for UserDetails
+                    _context.UsersDetails.Add(userDetail);
+
+                    //Save the changes to the database
+                    _context.SaveChanges();
+
+                    #endregion
+
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
