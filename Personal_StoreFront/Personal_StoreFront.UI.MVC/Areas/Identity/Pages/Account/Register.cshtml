@@ -49,6 +49,13 @@
                 <input asp-for="Input.Zip" class="form-control" autocomplete="zip" aria-required="true" />
                 <span asp-validation-for="Input.Zip" class="text-danger"></span>
             </div>
+
+            <div class="form-floating">
+                <label asp-for="Input.Country"></label>
+                <input asp-for="Input.Country" class="form-control" autocomplete="username" aria-required="true" />
+                <span asp-validation-for="Input.Country" class="text-danger"></span>
+            </div>
+
             <div class="form-floating">
                 <label asp-for="Input.Phone"></label>
                 <input asp-for="Input.Phone" class="form-control" autocomplete="phone" aria-required="true" />

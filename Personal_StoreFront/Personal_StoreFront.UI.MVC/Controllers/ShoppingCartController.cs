@@ -218,7 +218,7 @@ namespace Personal_StoreFront.UI.MVC.Controllers
             //Commit the changes and save to the database
             _context.SaveChanges();
 
-            return RedirectToAction("Index", "Orders");
+            return RedirectToAction("Index", "OrderDetails");
 
         }
 

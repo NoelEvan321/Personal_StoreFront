@@ -90,7 +90,8 @@
                 @Html.DisplayFor(modelItem => item.UnitsOnOrder)
                 </td>*@
                     <td>
-                        @Html.DisplayFor(modelItem => item.ProductPicture)
+                        @*@Html.DisplayFor(modelItem => item.ProductPicture)*@
+                        <img src="~/images/t_@item.ProductPicture" />
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.CardCondition.Condition)

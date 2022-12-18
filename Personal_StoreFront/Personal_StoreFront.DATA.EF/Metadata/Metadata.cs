@@ -89,11 +89,11 @@ namespace Personal_StoreFront.DATA.EF.Models//.Metadata
         public string? ProductSeries { get; set; }
 
         [StringLength(500, ErrorMessage = "*Max of 500 characters.")]
-        [Display(Name = "Description")]
+        [Display(Name = "Card Description")]
         public string? CardDescription { get; set; }//TODO: Create a placeholder "only needed if product is card"
 
         [StringLength(500, ErrorMessage = "*Max of 500 characters.")]
-        [Display(Name = "Product Set")]
+        [Display(Name = "Product Description")]
         public string? ProductDescription { get; set; }
 
         [DisplayFormat(ApplyFormatInEditMode = false, DataFormatString = "{0:c}")]

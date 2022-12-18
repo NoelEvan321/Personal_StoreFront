@@ -12,7 +12,7 @@ namespace Personal_StoreFront.DATA.EF.Models
 
         public int ProductId { get; set; }
         public int? CategoryId { get; set; }
-        public string ProductName { get; set; } = null!;
+        public string? ProductName { get; set; } = null!;
         public int? CardConditionId { get; set; }
         public string? ProductSeries { get; set; }
         public string? CardDescription { get; set; }

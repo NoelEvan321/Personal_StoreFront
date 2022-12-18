@@ -48,43 +48,63 @@ namespace Personal_StoreFront.UI.MVC.Controllers
         }
 
         // GET: Products/Details/5
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null || _context.Products == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    //if (ViewData["Title"].ToString() != "In Stock")
+        //    //{
+        //    //    var product = await _context.Products
+        //    //        .Include(p => p.CardCondition)
+        //    //        .Include(p => p.Category)
+        //    //        .Include(p => p.Type)
+        //    //        .FirstOrDefaultAsync(m => m.ProductId == id);
+        //        if (product == null)
+        //        {
+        //            return NotFound();
+        //        }
+
+        //        return View(product);
+        //    }
+        //    else
+        //    {
+        //        var product = await _context.Products.Where(p => p.UnitsInStock > 0)//TODO: Add "In Stock" View
+        //            .Include(p => p.CardCondition)
+        //            .Include(p => p.Category)
+        //            .Include(p => p.Type)
+        //            .FirstOrDefaultAsync(m => m.ProductId == id);
+        //        if (product == null)
+        //        {
+        //            return NotFound();
+        //        }
+
+        //        return View(product);
+        //    }
+
+        // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Products == null)
             {
                 return NotFound();
             }
-            if (ViewData["Title"].ToString() != "In Stock")
-            {
-                var product = await _context.Products
-                    .Include(p => p.CardCondition)
-                    .Include(p => p.Category)
-                    .Include(p => p.Type)
-                    .FirstOrDefaultAsync(m => m.ProductId == id);
-                if (product == null)
-                {
-                    return NotFound();
-                }
 
-                return View(product);
-            }
-            else
+            var product = await _context.Products
+                .Include(p => p.Category)
+                .Include(p => p.CardCondition)
+                .Include(p => p.Type)
+                .FirstOrDefaultAsync(m => m.ProductId == id);
+            if (product == null)
             {
-                var product = await _context.Products.Where(p => p.UnitsInStock > 0)//TODO: Add "In Stock" View
-                    .Include(p => p.CardCondition)
-                    .Include(p => p.Category)
-                    .Include(p => p.Type)
-                    .FirstOrDefaultAsync(m => m.ProductId == id);
-                if (product == null)
-                {
-                    return NotFound();
-                }
-
-                return View(product);
+                return NotFound();
             }
-            
+
+            return View(product);
         }
+
 
         // GET: Products/Create
         [Authorize(Roles = "Admin")]
@@ -101,6 +121,7 @@ namespace Personal_StoreFront.UI.MVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> Create([Bind("ProductId,CategoryId,ProductName,CardConditionId,ProductSeries,CardDescription,ProductDescription,ProductPrice,UnitsInStock,UnitsOnOrder,ProductPicture,TypeId,Image")] Product product)
         {
             if (ModelState.IsValid)
