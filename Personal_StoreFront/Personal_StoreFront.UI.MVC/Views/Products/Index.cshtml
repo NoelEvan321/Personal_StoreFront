@@ -69,7 +69,9 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.ProductName)
+                        <a asp-action="Details" asp-route-id="@item.ProductId" class="option1">
+                            @item.ProductName
+                        </a>
                     </td>
                     @*<td>
                 @Html.DisplayFor(modelItem => item.ProductSeries)

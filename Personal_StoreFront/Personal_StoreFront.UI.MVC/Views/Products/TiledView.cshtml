@@ -17,7 +17,7 @@
                 @if (User.IsInRole("Admin"))
                 {
 
-                    <a asp-action="Create">Add a Stuff</a>
+                    <a asp-action="Create">Add a Stuff </a> <span> | </span>
                 }
 
 
@@ -27,7 +27,7 @@
         </div>
 
 
-        <div class="row">
+        <div class="row mt-3">
 
             @foreach (var item in Model)
             {
@@ -37,7 +37,8 @@
                             <div class="options">
                                 <a asp-action="Details" asp-route-id="@item.ProductId" class="option1">
                                     @item.ProductName
-                                </a>
+                                </a> 
+                                <span> | </span>
                                 <a asp-action="AddToCart" asp-controller="ShoppingCart" asp-route-id="@item.ProductId" class="option2">
                                     Add to Cart
                                 </a>
