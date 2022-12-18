@@ -1,0 +1,31 @@
+﻿@model Personal_StoreFront.UI.MVC.Models.ContactViewModel
+
+@{
+    ViewData["Title"] = "Email Confirmation";
+}
+
+<section class="product_section gray-section pb-4 pt-4 mb-4">
+    <div class="heading_container heading_center">
+        <h2>
+            Message <span>Sent</span>
+        </h2>
+    </div>
+</section>
+
+
+<div class="row mb-3">
+    <div class="col-md-6 offset-3">
+        <h3>Thank you for contacting us!</h3>
+        <p>
+            We have received the following message:
+        </p>
+        <em>
+            @Model.Message
+        </em>
+        <br />
+        <p>
+            A member of our team will contact you at the provided email, @Model.Email,
+            within 24 hours.
+        </p>
+    </div>
+</div>
