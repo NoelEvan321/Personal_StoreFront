@@ -12,6 +12,8 @@ using System.Drawing;
 using Personal_StoreFront.UI.MVC.Controllers;
 using Personal_StoreFront.UI.MVC.Utilities;
 
+using X.PagedList;
+
 namespace Personal_StoreFront.UI.MVC.Controllers
 {
     public class ProductsController : Controller
@@ -34,16 +36,17 @@ namespace Personal_StoreFront.UI.MVC.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> TiledView()
+        public async Task<IActionResult> TiledView(int page = 1)
         {
+            int pageSize = 3;
             var products =
                 _context.Products //SELECT * FROM Products WHERE IsDiscontinued != true 
                     .Include(p => p.CardCondition)
                     .Include(p => p.Category)
-                    .Include(p => p.Type);
+                    .Include(p => p.Type).ToList();
                 //.Include(p => p.OrderProducts);//Similar to a JOIN - gives access to properties from OrderProduct
 
-            return View(await products.ToListAsync());
+            return View(products.ToPagedList(page, pageSize));
         }
 
         // GET: Products/Details/5

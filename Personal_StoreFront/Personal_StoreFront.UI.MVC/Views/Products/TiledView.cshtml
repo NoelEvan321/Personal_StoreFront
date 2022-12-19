@@ -1,4 +1,7 @@
-﻿@model IEnumerable<Personal_StoreFront.DATA.EF.Models.Product>
+﻿@*@model IEnumerable<Personal_StoreFront.DATA.EF.Models.Product>*@
+@model IPagedList<Personal_StoreFront.DATA.EF.Models.Product>
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
 
 @{
     ViewData["Title"] = "Tiled Stuffs";
@@ -61,6 +64,18 @@
 
         </div>
 
+        <div class="row mt-5">
+            <div class="w-50 mx-auto text-center">
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+            </div>
+            <div class="w-100">
+                @Html.PagedListPager(
+                Model,
+                page => Url.Action("TiledProducts",
+                new { page, searchTerm = ViewBag.SearchTerm, categoryId = ViewBag.Category }) // This allows us to provide the user's desired filters to every page
+                )
+            </div>
+        </div>
 
 
     </div>
