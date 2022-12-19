@@ -1,4 +1,7 @@
-﻿@model IEnumerable<Personal_StoreFront.DATA.EF.Models.Product>
+﻿@*@model IEnumerable<Personal_StoreFront.DATA.EF.Models.Product>*@
+@model IPagedList<Personal_StoreFront.DATA.EF.Models.Product>
+@using X.PagedList;
+@using X.PagedList.Mvc.Core;
 
 @{
     ViewData["Title"] = "Tiled Stuffs";
@@ -28,6 +31,51 @@
 
 
         <div class="row mt-3">
+
+            <div class="offset-3 col-sm-6">
+                <form asp-action="TiledProducts" method="get">
+
+                    @*
+                    method="get" > Appends the key/value pairs from a form
+                    onto the query string in our URL. The ? i the URL indicates
+                    the beginning of a query string. Everything after the ?
+                    is a key/value pair.
+
+                    ?searchTerm=WhateverYouSearchedFor&category=tool
+
+                    These key value pairs are passed to the Action as arguments
+                    for the action's parameters.
+
+                    public IActionResult TiledProducts(sting searchTerm)
+                    *@
+
+                    @*
+                    Categories Filter Dropdown
+                    *@
+                    <label for="categoryId" class="custom-control-label d-block text-center">
+                        Filter by Category
+                    </label>
+                    <select name="categoryId" class="form-control text-center mb-3" asp-items="ViewBag.CategoryId">
+                        <option value="0">[Choose a Category]</option>
+                    </select>
+
+                    @*
+                    inputs for search
+                    *@
+                    <input type="text" name="searchTerm" class="form-control text-center" placeholder="Search Stuffs..." />
+                    <input type="submit" value="Go" class="btn btn-primary text-center w-50 d-block" />
+                </form>
+
+
+                @if (ViewBag.NbrResults != null)
+                {
+                    <p class="mt-5 p-2 alert-warning text-center">
+                        Showing @ViewBag.NbrResults result@(ViewBag.NbrResults > 1 ? "s" : "") for '@ViewBag.SearchTerm'...
+                    </p>
+                }
+
+
+            </div>
 
             @foreach (var item in Model)
             {
@@ -61,6 +109,18 @@
 
         </div>
 
+        <div class="row mt-5">
+            <div class="w-50 mx-auto text-center">
+                Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+            </div>
+            <div class="w-100">
+                @Html.PagedListPager(
+                Model,
+                page => Url.Action("TiledProducts",
+                new { page, searchTerm = ViewBag.SearchTerm, categoryId = ViewBag.Category }) // This allows us to provide the user's desired filters to every page
+                )
+            </div>
+        </div>
 
 
     </div>
