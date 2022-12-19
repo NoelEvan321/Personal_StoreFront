@@ -10,12 +10,12 @@
 <section class="product_section layout_padding">
     <div class="container">
         <div class="heading_container heading_center">
-            <h2>
+            <h2 class="text-center mb-3">
                 Your <span>Cart</span>
             </h2>
 
             <p align="center">
-                <a asp-action="TiledProducts" asp-controller="Products" class="btn btn-info">
+                <a asp-action="TiledProducts" asp-controller="Products" class="btn btn-primary border-0 py-3">
                     Back to Shopping
                 </a>
             </p>
@@ -52,7 +52,7 @@
                                 <form asp-action="UpdateCart">
                                     <input type="hidden" name="productId" value="@item.Key" />
                                     <input type="number" name="qty" value="@item.Value.Qty" class="form-control d-block mx-auto w-50 text-center" />
-                                    <input type="submit" value="Update Cart" class="btn btn-primary btn-sm" />
+                                    <input type="submit" value="Update Cart" class="btn btn-primary border-0 py-3 btn-sm" />
                                 </form>
                             </td>
                             <td>
@@ -90,7 +90,7 @@
 
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <a asp-action="SubmitOrder" class="btn btn-primary">
+                    <a asp-action="SubmitOrder" class="btn">
                         Submit Order
                     </a>
                 }
@@ -99,7 +99,7 @@
                     <p>
                         To place this order you must be logged in.
                     </p>
-                    <button disabled="disabled" class="btn btn-primary">
+                    <button disabled="disabled" class="btn">
                         Submit Order
                     </button>
                 }

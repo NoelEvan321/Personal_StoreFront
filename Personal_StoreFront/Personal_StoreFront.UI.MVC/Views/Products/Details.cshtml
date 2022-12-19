@@ -6,7 +6,7 @@
 
 <section class="product_section gray-section pb-4 pt-4 mb-4">
     <div class="heading_container heading_center">
-        <h2>
+        <h2 class="text-center" align="center">
             @Model.ProductName <span>Details</span>
         </h2>
     </div>
@@ -16,12 +16,12 @@
 
     <div class="col-md-6 offset-0 offset-md-3 text-center">
         <img src="~/images/@Model.ProductPicture" alt="@Model.ProductName" longdesc="@Model.ProductDescription" class="img-fluid" />
-        <p class="text-info mt-3">
+        <p class=" text-center text-primary mt-3">
             @Html.DisplayFor(model => model.ProductDescription)
         </p>
-        <pre>
-            Product Set: @Model.ProductSeries 
-        </pre>
+        <p class="text-center">
+            Product Set: @Model.ProductSeries
+        </p>
     </div>
 
     <div class="offset-0 offset-md-3 col-md-3">
@@ -58,26 +58,31 @@
             </strong>
             @Html.DisplayFor(model => model.Type.ProductType1)
         </p>
+        @if (Model.CardConditionId != null)
+        {
+            <p>
+                <strong>
+                    @Html.DisplayNameFor(model => model.CardCondition):
+                </strong>
+                @Html.DisplayFor(model => model.CardCondition.Condition)
+            </p>
+        }
     </div>
-    @if(Model.CardConditionId >0)
+    @if (Model.CardConditionId != null)
     {
-        <p>
-            <strong>
-                @Html.DisplayNameFor(model => model.CardCondition):
-            </strong>
-            @Html.DisplayFor(model => model.CardCondition.Condition)
-        </p>
-        <p>
-            <strong>
-                @Html.DisplayNameFor(model => model.CardDescription):
-            </strong>
-            @Html.DisplayFor(model => model.CardDescription)
-        </p>
+        <div class="col-12 col-md-6 offset-3 text-center">
+            <p>
+                <strong>
+                    @Html.DisplayNameFor(model => model.CardDescription):
+                </strong>
+                @Html.DisplayFor(model => model.CardDescription)
+            </p>
+        </div>
     }
 
     <div class="col-12 col-md-6 offset-md-3">
         <a asp-action="Index" class="btn btn-primary w-100 d-inline-block">
-            Back to Products
+            Back to Stuffs
         </a>
     </div>
 

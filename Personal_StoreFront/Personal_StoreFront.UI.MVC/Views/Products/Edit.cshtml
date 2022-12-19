@@ -6,30 +6,11 @@
 
 <section class="product_section gray-section pb-4 pt-4 mb-4">
     <div class="heading_container heading_center">
-        <h2>
+        <h2 class="text-center" align="center">
             Modify <span>@Model.ProductName</span>
         </h2>
     </div>
 </section>
-
-@{
-            /*
-         * EDIT File Upload Steps
-         * ** NOTE: These steps assume that you have already implemented file upload in the Create view/action.  If you have not, implement that first, and then come back
-         * ** to edit. **
-         * 1) Modify Edit View
-         *      - Add <input type="hidden" asp-for="[PropertyName]" /> for the class's image property
-         *      - Add enctype="multipart/form-data" to the <form>
-         *      - Comment out <input type="text"...> for original image property
-         *      - Replace with <input type="file" asp-for="[IFormFile Prop Name]" />
-         *
-         * 2) Add code to handle file upload in Controller (Edit POST)
-         *      - BIND the IFormFile property in the method signature
-         *      - Add logic to process the file upload --> save the file to the web server, save the file name to the DB
-         *          - Note: this logic is slightly different than what we needed for the create, so when doing this in StoreFront,
-         *              be sure to refer to the Edit example.
-    */
-}
 
 <div class="row mb-3">
     <div class="col-md-6 offset-3">
@@ -93,7 +74,7 @@
                 <select asp-for="TypeId" class="form-control" asp-items="ViewBag.TypeId"></select>
                 <span asp-validation-for="TypeId" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" align="center">
                 <input type="submit" value="Update" class="btn btn-primary" />
             </div>
         </form>
@@ -101,7 +82,7 @@
 </div>
 
 <div class="row text-center">
-    <a asp-action="Index" style="margin: auto;">Back to Products</a>
+    <a asp-action="Index" style="margin: auto;">Back to Stuffs</a>
 </div>
 
 @section Scripts {

@@ -9582,3 +9582,9 @@ a.text-dark:hover, a.text-dark:focus {
     transform: translateY(-15px);
   }
 }
+
+/*Custom*/
+h2.text-center span {
+    color:#D19C97 !important;
+    font-weight: bold !important;
+}

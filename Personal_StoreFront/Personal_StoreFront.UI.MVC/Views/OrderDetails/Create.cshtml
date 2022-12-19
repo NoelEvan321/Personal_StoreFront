@@ -4,10 +4,14 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<section class="product_section gray-section pb-4 pt-4 mb-4">
+    <div class="heading_container heading_center">
+        <h2 class="text-center" align="center">
+            Add <span> Order</span>
+        </h2>
+    </div>
+</section>
 
-<h4>OrderDetail</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
@@ -59,7 +63,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Back to Orders</a>
 </div>
 
 @section Scripts {
