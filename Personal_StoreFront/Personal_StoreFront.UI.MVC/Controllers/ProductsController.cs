@@ -13,6 +13,7 @@ using Personal_StoreFront.UI.MVC.Controllers;
 using Personal_StoreFront.UI.MVC.Utilities;
 
 using X.PagedList;
+using MailKit.Search;
 
 namespace Personal_StoreFront.UI.MVC.Controllers
 {
@@ -36,7 +37,7 @@ namespace Personal_StoreFront.UI.MVC.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> TiledView(int page = 1)
+        public async Task<IActionResult> TiledView(string searchTerm, int categoryId = 0, int page = 1)
         {
             int pageSize = 3;
             var products =
@@ -44,7 +45,52 @@ namespace Personal_StoreFront.UI.MVC.Controllers
                     .Include(p => p.CardCondition)
                     .Include(p => p.Category)
                     .Include(p => p.Type).ToList();
-                //.Include(p => p.OrderProducts);//Similar to a JOIN - gives access to properties from OrderProduct
+            //.Include(p => p.OrderProducts);//Similar to a JOIN - gives access to properties from OrderProduct
+            #region Optional Category Filter
+
+            //Create a ViewData object to send a list of categories to the View
+            //(This is similar to what you see in the pruducts/crete or products/edit actions)
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName");
+            ViewBag.Category = 0;
+
+            if (categoryId != 0)
+            {
+                products = products.Where(p => p.CategoryId == categoryId).ToList();
+
+                ViewData["CategoryId"] = new SelectList(_context.Categories, "CategoryId", "CategoryName", categoryId);
+                ViewBag.Category = categoryId;
+            }
+
+            #endregion
+
+            #region Optional Search Filter
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                string searchTermForUs = searchTerm.ToLower();
+
+                products = products.Where(p =>
+                p.ProductName.ToLower().Contains(searchTermForUs) ||
+                p.CardCondition.Condition.ToLower().Contains(searchTermForUs) ||
+                p.Type.ProductType1.ToLower().Contains(searchTermForUs) ||
+                p.Category.CategoryName.ToLower().Contains(searchTermForUs) ||
+                p.ProductDescription.ToLower().Contains(searchTermForUs)).ToList();
+
+
+
+                //Store the number of results
+                ViewBag.NbrResults = products.Count;
+                //Store the search term
+                ViewBag.SearchTerm = searchTerm;
+
+            }
+            else
+            {
+                ViewBag.NbrResults = null;
+                ViewBag.SearchTerm = null;
+            }
+
+            #endregion
 
             return View(products.ToPagedList(page, pageSize));
         }
