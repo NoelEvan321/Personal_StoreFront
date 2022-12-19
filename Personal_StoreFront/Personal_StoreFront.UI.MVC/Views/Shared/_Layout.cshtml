@@ -38,6 +38,12 @@
     <!-- Libraries Stylesheet -->
     <link href="~/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 
+    <!--Datatables-->
+    <link href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+
+    <!--PagedList -->
+    <link href="~/css/PagedList.css" rel="stylesheet" />
+
     <!-- Customized Bootstrap Stylesheet -->
     <link href="~/css/style.css" rel="stylesheet">
 </head>
@@ -324,7 +330,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/easing/easing.min.js"></script>
     <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
-
+    <!--DataTables-->
+    <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <!-- Contact Javascript File -->
     <script src="~/mail/jqBootstrapValidation.min.js"></script>
     <script src="~/mail/contact.js"></script>
@@ -342,7 +349,7 @@
         }
         </script>
     -->
-    @RenderSection("scripts", false)
+    @await RenderSectionAsync("scripts", false)
 </body>
 
 </html>
