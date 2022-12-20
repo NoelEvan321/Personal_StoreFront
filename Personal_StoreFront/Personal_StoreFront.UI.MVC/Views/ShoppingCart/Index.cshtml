@@ -15,8 +15,8 @@
             </h2>
 
             <p align="center">
-                <a asp-action="TiledProducts" asp-controller="Products" class="btn btn-primary border-0 py-3">
-                    Back to Shopping
+                <a asp-action="TiledView" asp-controller="Products" class="btn btn-primary border-0 py-3">
+                    Back to Stuffs
                 </a>
             </p>
 
@@ -24,7 +24,7 @@
 
         @if (Model.Count == 0)
         {
-            <p class="alert alert-warning text-center">
+            <p class="alert alert-info text-center">
                 @ViewBag.Message
             </p>
         }
@@ -33,7 +33,7 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Product</th>
+                        <th>The Stuff</th>
                         <th>Quantity</th>
                         <th>Name</th>
                         <th>Price</th>
@@ -52,7 +52,7 @@
                                 <form asp-action="UpdateCart">
                                     <input type="hidden" name="productId" value="@item.Key" />
                                     <input type="number" name="qty" value="@item.Value.Qty" class="form-control d-block mx-auto w-50 text-center" />
-                                    <input type="submit" value="Update Cart" class="btn btn-primary border-0 py-3 btn-sm" />
+                                    <input type="submit" value="Update Cart" class="btn btn-primary border-0 py-3 btn-sm align-content-center" />
                                 </form>
                             </td>
                             <td>
@@ -90,7 +90,7 @@
 
                 @if (User.Identity.IsAuthenticated)
                 {
-                    <a asp-action="SubmitOrder" class="btn">
+                    <a asp-action="SubmitOrder" class="btn btn-outline-primary">
                         Submit Order
                     </a>
                 }
